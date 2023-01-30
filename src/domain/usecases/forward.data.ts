@@ -1,5 +1,5 @@
 export interface ForwardData {
-    handle: (data: string) => Promise<void>
+    handle: (data: ForwardData.Request) => Promise<void>
 }
 
 export namespace ForwardData {
