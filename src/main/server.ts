@@ -1,6 +1,6 @@
 import 'module-alias/register'
 import env from '@/main/config/env'
-import { MongoHelper } from '@/infra/db/mongo.helper'
+import { MongoHelper } from '@/infra/db/mongodb/mongo.helper'
 import { setupKafka } from '@/main/config/kafka/kafka.server'
 import { makeReceiveSensorMeasuresController } from '@/main/factories'
 
