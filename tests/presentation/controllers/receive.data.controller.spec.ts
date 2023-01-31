@@ -62,4 +62,11 @@ describe('ReceiveMeasuresController', () => {
         const httpResponse = await sut.handle(request)
         expect(httpResponse.statusCode).toBe(500)
     })
+
+    test('Should return 204 if ForwardData succeds', async () => {
+        const { sut } = makeSut()
+        const request = mockParams()
+        const httpResponse = await sut.handle(request)
+        expect(httpResponse.statusCode).toBe(204)
+    })
 })

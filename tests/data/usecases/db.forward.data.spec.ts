@@ -36,7 +36,7 @@ describe('DbForwardData', () => {
     test('Should throw if DbForwardData throws', async () => {
         const { sut, kafkaClientSpy } = makeSut()
         const request = mockRequest()
-        jest.spyOn(kafkaClientSpy, 'send').mockImplementationOnce(throwError)
+        jest.spyOn(kafkaClientSpy, 'sendMessage').mockImplementationOnce(throwError)
         const promise = sut.handle(request)
         await expect(promise).rejects.toThrow()
     })
