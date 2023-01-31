@@ -3,10 +3,10 @@ import { KafkaClient } from '@/data/protocols'
 
 export class DbForwardData implements ForwardData {
     constructor(
-        private readonly kafkaClient: KafkaClient
+        private readonly producer: KafkaClient
     ) { }
 
     async handle(data: ForwardData.Request): Promise<void> {
-        this.kafkaClient.send(data)
+        await this.producer.sendMessage(data)
     }
 }

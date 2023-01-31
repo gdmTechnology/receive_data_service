@@ -1,5 +1,7 @@
 import { ForwardData } from '@/domain/usecases'
+import { Producer } from 'kafkajs'
 
 export interface KafkaClient {
-    send: (data: ForwardData.Request) => Promise<void>
+    sendMessage: (data: ForwardData.Request) => Promise<void>
+    kafkaProducer: () => Promise<Producer>
 }
