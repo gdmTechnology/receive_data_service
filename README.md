@@ -1,1 +1,1 @@
-# clean_architeture_template
+# receive_data_service
