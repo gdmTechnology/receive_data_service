@@ -4,8 +4,8 @@ import { KafkaProducer } from '@/infra/kafka'
 
 export const setupKafka = async (): Promise<KafkaProducer> => {
     const kafkaServer = new Kafka({
-        clientId: env.KAFKA_CLIENTID,
-        brokers: [`${env.KAFKA_BROKER_HOST}: ${env.KAFKA_BROKER_PORT}`]
+        clientId: env.kafkaClientId,
+        brokers: [`${env.kafkaBrokerHost}: ${env.kafkaBrokerPort}`]
     })
     const kafkaProducer = new KafkaProducer(kafkaServer)
     await kafkaProducer.kafkaProducer()
