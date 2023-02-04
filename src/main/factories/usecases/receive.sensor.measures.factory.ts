@@ -1,7 +1,8 @@
-import { KafkaProducer } from '@/infra/kafka'
 import { ForwardData } from '@/domain/usecases'
 import { DbForwardData } from '@/data/usecases'
+import { KafkaSendMsg } from '@/infra/kafka'
 
-export const makeDbReceiveSensorMeasures = (producer: KafkaProducer): ForwardData => {
-    return new DbForwardData(producer)
+export const makeDbReceiveSensorMeasures = (): ForwardData => {
+    const sendMessage = new KafkaSendMsg()
+    return new DbForwardData(sendMessage)
 }

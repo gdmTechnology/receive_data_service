@@ -1,9 +1,9 @@
-import { KafkaClient } from '@/data/protocols'
+import { KafkaClient, KafkaSendData } from '@/data/protocols'
 import { ForwardData } from '@/domain/usecases'
 import { Producer, Kafka } from 'kafkajs'
 import { Topics } from '@/main/config/kafka'
 
-let producer = null
+export let producer = null
 
 export class KafkaProducer implements KafkaClient {
     constructor(
@@ -11,13 +11,17 @@ export class KafkaProducer implements KafkaClient {
     ) { }
 
     async kafkaProducer(): Promise<Producer> {
+        if (producer) return producer
         producer = this.kafkaServer.producer()
         await producer.connect()
         return producer
     }
+}
 
-    async sendMessage(message: ForwardData.Request): Promise<void> {
+export class KafkaSendMsg implements KafkaSendData {
+    async send(message: ForwardData.Request): Promise<void> {
         const mesgStringyfied = JSON.stringify(message)
+        console.log('sendMessage', mesgStringyfied)
         await producer.send({
             topic: Topics.MEASURE,
             messages: [

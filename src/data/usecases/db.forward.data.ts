@@ -1,12 +1,11 @@
 import { ForwardData } from '@/domain/usecases'
-import { KafkaClient } from '@/data/protocols'
-
+import { KafkaSendData } from '../protocols'
 export class DbForwardData implements ForwardData {
     constructor(
-        private readonly producer: KafkaClient
+        private readonly sendMessage: KafkaSendData
     ) { }
 
     async handle(data: ForwardData.Request): Promise<void> {
-        await this.producer.sendMessage(data)
+        await this.sendMessage.send(data)
     }
 }
