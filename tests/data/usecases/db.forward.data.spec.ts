@@ -1,17 +1,17 @@
 import { DbForwardData } from '@/data/usecases'
-import { KafkaClientSpy } from '../mocks'
+import { KafkaSendDataSpy } from '../mocks'
 
 type SutTypes = {
-    kafkaClientSpy: KafkaClientSpy
+    kafkaSendDataSpy: KafkaSendDataSpy
     sut: DbForwardData
 }
 
 const makeSut = (): SutTypes => {
-    const kafkaClientSpy = new KafkaClientSpy()
-    const sut = new DbForwardData(kafkaClientSpy)
+    const kafkaSendDataSpy = new KafkaSendDataSpy()
+    const sut = new DbForwardData(kafkaSendDataSpy)
     return {
         sut,
-        kafkaClientSpy
+        kafkaSendDataSpy
     }
 }
 
@@ -27,16 +27,16 @@ const mockRequest = (): any => ({
 
 describe('DbForwardData', () => {
     test('Should call DbForwardData with correct values', async () => {
-        const { sut, kafkaClientSpy } = makeSut()
+        const { sut, kafkaSendDataSpy } = makeSut()
         const request = mockRequest()
         await sut.handle(request)
-        expect(kafkaClientSpy.input).toEqual(request)
+        expect(kafkaSendDataSpy.input).toEqual(request)
     })
 
     test('Should throw if DbForwardData throws', async () => {
-        const { sut, kafkaClientSpy } = makeSut()
+        const { sut, kafkaSendDataSpy } = makeSut()
         const request = mockRequest()
-        jest.spyOn(kafkaClientSpy, 'sendMessage').mockImplementationOnce(throwError)
+        jest.spyOn(kafkaSendDataSpy, 'send').mockImplementationOnce(throwError)
         const promise = sut.handle(request)
         await expect(promise).rejects.toThrow()
     })
