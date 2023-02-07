@@ -1,5 +1,12 @@
-import { ForwardData } from '@/domain/usecases'
-
 export interface KafkaSendData {
-    send: (message: ForwardData.Request) => Promise<void>
+    send: (message: KafkaSendData.Request) => Promise<void>
+}
+
+export namespace KafkaSendData {
+    export type Request = {
+        sensorIdentification: string
+        sensorMeasureType: string
+        sensorValue: string
+        sensorTimeStamp: string
+    }
 }
