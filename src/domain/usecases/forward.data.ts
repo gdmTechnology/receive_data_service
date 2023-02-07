@@ -5,7 +5,10 @@ export interface ForwardData {
 export namespace ForwardData {
     export type Request = {
         sensorIdentification: string
-        sensorValue: string
-        sensorTimeStamp: string
+        measures: Array<{
+            sensorMeasureType: string
+            sensorValue: string
+            sensorTimeStamp: string
+        }>
     }
 }
