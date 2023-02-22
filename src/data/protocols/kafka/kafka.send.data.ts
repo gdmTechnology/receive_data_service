@@ -4,6 +4,7 @@ export interface KafkaSendData {
 
 export namespace KafkaSendData {
     export type Request = {
+        deviceIdentification: string
         sensorIdentification: string
         sensorMeasureType: string
         sensorValue: string

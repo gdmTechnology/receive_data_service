@@ -4,8 +4,9 @@ export interface ForwardData {
 
 export namespace ForwardData {
     export type Request = {
-        sensorIdentification: string
+        deviceIdentification: string
         measures: Array<{
+            sensorIdentification: string
             sensorMeasureType: string
             sensorValue: string
             sensorTimeStamp: string

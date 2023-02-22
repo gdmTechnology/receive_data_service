@@ -8,7 +8,8 @@ export class DbForwardData implements ForwardData {
     async handle(data: ForwardData.Request): Promise<void> {
         for (let i = 0; i < data.measures.length; i++) {
             const datahandled = {
-                sensorIdentification: data.sensorIdentification,
+                deviceIdentification: data.deviceIdentification,
+                sensorIdentification: data.measures[i].sensorIdentification,
                 sensorMeasureType: data.measures[i].sensorMeasureType,
                 sensorValue: data.measures[i].sensorValue,
                 sensorTimeStamp: data.measures[i].sensorTimeStamp
