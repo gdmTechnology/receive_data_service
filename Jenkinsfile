@@ -50,7 +50,7 @@ pipeline {
 					-e MONGO_USER=rem \
 					-p 3004:3004 \
 					--hostname receive_service \
-                    --network middleware-network \
+                    --network rem-network \
 					--restart always \
 					--name receive_service receive-service
 				'''
