@@ -20,17 +20,28 @@ const throwError = (): any => {
 }
 
 const mockRequest = (): any => ({
-    sensorIdentification: 'sensorIdentification',
-    sensorValue: 'sensorValue',
-    sensorTimeStamp: 'sensorTimeStamp'
+    deviceIdentification: 'deviceIdentification',
+    measures: [{
+        sensorIdentification: 'sensorIdentification',
+        sensorMeasureType: 'sensorMeasureType',
+        sensorValue: 'sensorValue',
+        sensorTimeStamp: 'sensorTimeStamp'
+    }]
+
 })
 
 describe('DbForwardData', () => {
-    test('Should call DbForwardData with correct values', async () => {
+    test('Should call kafkaSendData with correct values', async () => {
         const { sut, kafkaSendDataSpy } = makeSut()
         const request = mockRequest()
         await sut.handle(request)
-        expect(kafkaSendDataSpy.input).toEqual(request)
+        expect(kafkaSendDataSpy.input).toEqual({
+            deviceIdentification: 'deviceIdentification',
+            sensorIdentification: 'sensorIdentification',
+            sensorMeasureType: 'sensorMeasureType',
+            sensorValue: 'sensorValue',
+            sensorTimeStamp: 'sensorTimeStamp'
+        })
     })
 
     test('Should throw if DbForwardData throws', async () => {
