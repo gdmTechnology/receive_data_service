@@ -18,18 +18,18 @@ pipeline {
 			}
 			post {
 				always {
-				step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/clover.xml', lineCoverageTargets: '100, 95, 50'])
+				step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml', lineCoverageTargets: '100, 95, 50'])
 				}
-			}
-		}
-		stage("killing old container") {
-			steps {
-				sh 'sudo docker system prune --all'
 			}
 		}
 		stage("build") {
 			steps {
 				sh 'docker build -t receive-service .'
+			}
+		}
+				stage("killing old container") {
+			steps {
+				sh 'sudo docker system prune --all'
 			}
 		}
 		stage("run") {
@@ -52,7 +52,7 @@ pipeline {
 					--hostname receive_service \
                     --network middleware-network \
 					--restart always \
-					--name receive_service receive_service
+					--name receive_service receive-service
 				'''
 			}
 		}
