@@ -9,11 +9,17 @@ pipeline {
 				'''
 			}
 		}
-		stage('Tests') {
+		stage("install node_modules") {
 			steps {
 				script {
 				sh 'npm i'
-				sh 'npm run test'
+				}
+			}
+		}
+		stage('tests') {
+			steps {
+				script {
+				sh 'npm run test:ci'
 				}
 			}
 			post {
@@ -22,14 +28,29 @@ pipeline {
 				}
 			}
 		}
-		stage("build") {
+		stage("stop container") {
 			steps {
-				sh 'docker build -t receive-service .'
+				sh 'docker stop receive_service || true'
 			}
 		}
-		stage("killing old container") {
+		stage("remove old image") {
 			steps {
-				sh 'docker system prune --all'
+				sh 'docker rmi receive-service || true'
+			}
+		}
+		stage("remove unused containers and images") {
+			steps {
+				sh 'docker system prune -af'
+			}
+		}
+		stage("build typescript") {
+			steps {
+				sh 'npm run build'
+			}
+		}
+		stage("build docker image") {
+			steps {
+				sh 'docker build -t receive-service .'
 			}
 		}
 		stage("run") {
